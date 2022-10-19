@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-# 0-rectangle.py
-# Brennan D Baraban <375@holbertonschool.com>
-"""Defines a Rectangle class."""
+"""""This module create a rectangle"""
 
 
 class Rectangle:
-    """Represent a rectangle."""
-    passrint(new_list is my_list)
+    """
+    pass atribute - empty class
+    """
+    def __init__(self):
+        pass
