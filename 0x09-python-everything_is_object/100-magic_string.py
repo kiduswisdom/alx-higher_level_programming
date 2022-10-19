@@ -1,4 +1,4 @@
 #!/usr/bin/python3
 def magic_string():
-    magic_string.n = getattr(magic_string, 'n', 0) + 1
-    return ("Holberton, " * (magic_string.n - 1) + "Holberton")
+    setattr(magic_string, "times", getattr(magic_string, "times", -1) + 1)
+    return "Holberton" + ", Holberton" * getattr(magic_string, "times", 0)
