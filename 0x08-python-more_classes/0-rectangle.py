@@ -5,5 +5,5 @@
 
 
 class Rectangle:
-        """Represent a rectangle."""
-            pass
+    """Represent a rectangle."""
+    passrint(new_list is my_list)
