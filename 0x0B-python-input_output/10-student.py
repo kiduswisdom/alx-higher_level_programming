@@ -1,25 +1,41 @@
 #!/usr/bin/python3
-"""Student module.
-Contains a Student class and some methods.
-"""
+"""Log parsing script."""
+import sys
+
+total_size = 0
+codes = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+iteration = 0
 
 
-class Student():
-    """Defines a Student."""
+def print_stats():
+    """Function that prints a resume of the stats."""
+    print("File size: {}".format(total_size))
+    for k, v in sorted(codes.items()):
+        if v is not 0:
+            print("{}: {}".format(k, v))
 
-    def __init__(self, first_name, last_name, age):
-        """Sets the necessary attributes for the Student object.
-        Args:
-            first_name (str): first name of the student.
-            last_name (str): last name of the student.
-            age (int): age of the student.
-        """
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
 
-    def to_json(self, attrs=None):
-        """Retrieves a dictionary representation of a Student instance."""
-        if attrs is not None:
-            return {k: v for k, v in self.__dict__.items() if k in attrs}
-        return self.__dict__
+try:
+    for line in sys.stdin:
+        line = line.split()
+        if len(line) >= 2:
+            tmp = iteration
+            if line[-2] in codes:
+                codes[line[-2]] += 1
+                iteration += 1
+            try:
+                total_size += int(line[-1])
+                if tmp == iteration:
+                    iteration += 1
+            except:
+                if tmp == iteration:
+                    continue
+
+        if iteration % 10 == 0:
+            print_stats()
+
+    print_stats()
+
+except KeyboardInterrupt:
+    print_stats()
