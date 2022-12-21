@@ -1,22 +1,35 @@
 #!/usr/bin/python3
-# Prints the first State object from the database hbtn_0e_6_usa.
-# Usage: ./8-model_state_fetch_first.py <mysql username> /
-#                                       <mysql password> /
-#                                       <database name>
+"""
+Script that prints the first `State` object from the database `hbtn_0e_6_usa`.
+Arguments:
+    mysql username (str)
+    mysql password (str)
+    database name (str)
+"""
+
 import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from model_state import State
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import Session
+from sqlalchemy.engine.url import URL
+from model_state import Base, State
+
 
 if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    mySQL_u = sys.argv[1]
+    mySQL_p = sys.argv[2]
+    db_name = sys.argv[3]
 
-    state = session.query(State).order_by(State.id).first()
-    if state is None:
-        print("Nothing")
+    url = {'drivername': 'mysql+mysqldb', 'host': 'localhost',
+           'username': mySQL_u, 'password': mySQL_p, 'database': db_name}
+
+    engine = create_engine(URL(**url), pool_pre_ping=True)
+    Base.metadata.create_all(engine)
+
+    session = Session(bind=engine)
+
+    instance = session.query(State).order_by(State.id).first()
+
+    if instance:
+        print("{}: {}".format(instance.id, instance.name))
     else:
-        print("{}: {}".format(state.id, state.name))
+        print("Nothing")
