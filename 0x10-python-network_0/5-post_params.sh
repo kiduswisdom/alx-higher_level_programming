@@ -1,3 +1,3 @@
 #!/bin/bash
-# Display the body after sent a header variable and GET request
-curl -s -X POST -L "$1" -d 'email=hr@holbertonschool.com&subject=I will always be here for PLD'
+# Take in URL, POST key:vals; Usage: ./5-post_params.sh 0.0.0.0:5000/route_6 ; echo ""
+curl -s -X POST -d "email=test@gmail.com&subject=I will always be here for PLD" "$1"
