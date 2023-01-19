@@ -1,18 +1,11 @@
 #!/usr/bin/python3
-"""
-Script that fetches https://intranet.hbtn.io/status
-and displays status information
-"""
-import urllib.request
-
+"""fetches https://intranet.hbtn.io/status"""
+from urllib import request
 
 if __name__ == "__main__":
-    """
-    This script fetches a URL with an urllib
-    and displays info of the status
-    """
-    with urllib.request.urlopen('https://intranet.hbtn.io/status') as response:
-        statusInfo = response.read()
-
-    print("Body response:\n\t- type: {}\n\t- content: {}\n\t- utf8 content: {}"
-          .format(type(statusInfo), statusInfo, str(statusInfo)[2:-1]))
+    with request.urlopen("https://intranet.hbtn.io/status") as response:
+        response = response.read()
+        print("Body response:")
+        print("\t- type: {}".format(type(response)))
+        print("\t- content: {}".format(response))
+        print("\t- utf8 content: {}".format(response.decode(encoding='utf-8')))
